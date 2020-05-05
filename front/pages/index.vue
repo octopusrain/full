@@ -1,35 +1,32 @@
+<!--
+ * @Author: your name
+ * @Date: 2020-04-23 16:34:21
+ * @LastEditTime: 2020-05-05 19:45:48
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: /full/front/pages/index.vue
+ -->
 <template>
   <section class="container">
-    <div>
-      <logo />
-      <h1 class="title">
-        front
-      </h1>
-      <h2 class="subtitle">
-        My super-excellent Nuxt.js project
-      </h2>
-      <div class="links">
-        <a
-          href="https://nuxtjs.org/"
-          target="_blank"
-          class="button--green"
-        >Documentation</a>
-        <a
-          href="https://github.com/nuxt/nuxt.js"
-          target="_blank"
-          class="button--grey"
-        >GitHub</a>
-      </div>
+    <div v-if="user">
+      <h2>{{ user.name }}</h2>
+      <p>{{ user.email }}</p>
     </div>
   </section>
 </template>
 
 <script>
-import Logo from '~/components/Logo.vue'
 
 export default {
-  components: {
-    Logo
+  data() {
+    return {
+      user: null
+    }
+  },
+  async mounted() {
+    const token = window.localStorage.getItem('token')
+    const { data } = await this.$http.get('/api/user/info?token=' + token)
+    this.user = data
   }
 }
 </script>

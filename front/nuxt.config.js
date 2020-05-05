@@ -1,3 +1,10 @@
+/*
+ * @Descripttion:
+ * @Author: octopus
+ * @Date: 2020-04-23 16:34:21
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2020-05-05 15:39:34
+ */
 const pkg = require('./package')
 
 module.exports = {
@@ -34,7 +41,8 @@ module.exports = {
   ** Plugins to load before mounting the App
   */
   plugins: [
-    '@/plugins/element-ui'
+    '@/plugins/element-ui',
+    '@/plugins/axios'
   ],
 
   /*
@@ -42,7 +50,8 @@ module.exports = {
   */
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
-    '@nuxtjs/axios'
+    '@nuxtjs/axios',
+    '@nuxtjs/proxy'
   ],
   /*
   ** Axios module configuration
@@ -50,7 +59,14 @@ module.exports = {
   axios: {
     // See https://github.com/nuxt-community/axios-module#options
   },
-
+  proxy: {
+    '/api/': {
+      target: 'http://localhost:7002',
+      pathRewrite: {
+        'api/': ''
+      }
+    }
+  },
   /*
   ** Build configuration
   */
